@@ -10,22 +10,23 @@ using DeviceManagement_WebApp.Models;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class ZonesController : Controller
+    public class DevicesRepository : Controller
     {
         private readonly ConnectedOfficeContext _context;
 
-        public ZonesControllery(ConnectedOfficeContext context)
+        public DevicesRepository(ConnectedOfficeContext context)
         {
             _context = context;
         }
 
-        // GET: Zones
+        // GET: Devices
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Zone.ToListAsync());
+            var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
+            return View(await connectedOfficeContext.ToListAsync());
         }
 
-        // GET: Zones/Details/5
+        // GET: Devices/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -33,37 +34,42 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
-            if (zone == null)
+            var device = await _context.Device
+                .Include(d => d.Category)
+                .Include(d => d.Zone)
+                .FirstOrDefaultAsync(m => m.DeviceId == id);
+            if (device == null)
             {
                 return NotFound();
             }
 
-            return View(zone);
+            return View(device);
         }
 
-        // GET: Zones/Create
+        // GET: Devices/Create
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
+            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
             return View();
         }
 
-        // POST: Zones/Create
+        // POST: Devices/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
+        public async Task<IActionResult> Create([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         {
-            zone.ZoneId = Guid.NewGuid();
-            _context.Add(zone);
+            device.DeviceId = Guid.NewGuid();
+            _context.Add(device);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
+
+
         }
 
-        // GET: Zones/Edit/5
+        // GET: Devices/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -71,34 +77,35 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone.FindAsync(id);
-            if (zone == null)
+            var device = await _context.Device.FindAsync(id);
+            if (device == null)
             {
                 return NotFound();
             }
-            return View(zone);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
+            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
+            return View(device);
         }
 
-        // POST: Zones/Edit/5
+        // POST: Devices/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
+        public async Task<IActionResult> Edit(Guid id, [Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         {
-            if (id != zone.ZoneId)
+            if (id != device.DeviceId)
             {
                 return NotFound();
             }
-
             try
             {
-                _context.Update(zone);
+                _context.Update(device);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ZoneExists(zone.ZoneId))
+                if (!DeviceExists(device.DeviceId))
                 {
                     return NotFound();
                 }
@@ -111,7 +118,7 @@ namespace DeviceManagement_WebApp.Controllers
 
         }
 
-        // GET: Zones/Delete/5
+        // GET: Devices/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -119,30 +126,32 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
-            if (zone == null)
+            var device = await _context.Device
+                .Include(d => d.Category)
+                .Include(d => d.Zone)
+                .FirstOrDefaultAsync(m => m.DeviceId == id);
+            if (device == null)
             {
                 return NotFound();
             }
 
-            return View(zone);
+            return View(device);
         }
 
-        // POST: Zones/Delete/5
+        // POST: Devices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = await _context.Zone.FindAsync(id);
-            _context.Zone.Remove(zone);
+            var device = await _context.Device.FindAsync(id);
+            _context.Device.Remove(device);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ZoneExists(Guid id)
+        private bool DeviceExists(Guid id)
         {
-            return _context.Zone.Any(e => e.ZoneId == id);
+            return _context.Device.Any(e => e.DeviceId == id);
         }
     }
 }

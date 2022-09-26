@@ -10,22 +10,22 @@ using DeviceManagement_WebApp.Models;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class ZonesController : Controller
+    public class CategoriesRepository : Controller
     {
         private readonly ConnectedOfficeContext _context;
 
-        public ZonesControllery(ConnectedOfficeContext context)
+        public CategoriesRepository(ConnectedOfficeContext context)
         {
             _context = context;
         }
 
-        // GET: Zones
+        // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Zone.ToListAsync());
+            return View(await _context.Category.ToListAsync());
         }
 
-        // GET: Zones/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -33,37 +33,36 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
-            if (zone == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(zone);
+            return View(category);
         }
 
-        // GET: Zones/Create
+        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Zones/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
-            zone.ZoneId = Guid.NewGuid();
-            _context.Add(zone);
+            category.CategoryId = Guid.NewGuid();
+            _context.Add(category);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Zones/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
@@ -71,34 +70,33 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone.FindAsync(id);
-            if (zone == null)
+            var category = await _context.Category.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(zone);
+            return View(category);
         }
 
-        // POST: Zones/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
+        public async Task<IActionResult> Edit(Guid id, [Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
-            if (id != zone.ZoneId)
+            if (id != category.CategoryId)
             {
                 return NotFound();
             }
-
             try
             {
-                _context.Update(zone);
+                _context.Update(category);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ZoneExists(zone.ZoneId))
+                if (!CategoryExists(category.CategoryId))
                 {
                     return NotFound();
                 }
@@ -108,10 +106,9 @@ namespace DeviceManagement_WebApp.Controllers
                 }
             }
             return RedirectToAction(nameof(Index));
-
         }
 
-        // GET: Zones/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -119,30 +116,30 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
-            if (zone == null)
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(zone);
+            return View(category);
         }
 
-        // POST: Zones/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = await _context.Zone.FindAsync(id);
-            _context.Zone.Remove(zone);
+            var category = await _context.Category.FindAsync(id);
+            _context.Category.Remove(category);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ZoneExists(Guid id)
+        private bool CategoryExists(Guid id)
         {
-            return _context.Zone.Any(e => e.ZoneId == id);
+            return _context.Category.Any(e => e.CategoryId == id);
         }
     }
 }
