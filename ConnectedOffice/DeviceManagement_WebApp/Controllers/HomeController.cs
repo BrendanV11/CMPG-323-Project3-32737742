@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class HomeRepository : Controller
+    public class HomeController : Controller
     {
-        private readonly ILogger<HomeRepository> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeRepository(ILogger<HomeRepository> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }

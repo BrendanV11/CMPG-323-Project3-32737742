@@ -10,11 +10,11 @@ using DeviceManagement_WebApp.Models;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class ZonesRepository : Controller
+    public class ZonesController : Controller
     {
         private readonly ConnectedOfficeContext _context;
 
-        public ZonesRepository(ConnectedOfficeContext context)
+        public ZonesController(ConnectedOfficeContext context)
         {
             _context = context;
         }
