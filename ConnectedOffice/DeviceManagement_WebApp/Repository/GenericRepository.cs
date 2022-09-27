@@ -5,20 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static DeviceManagement_WebApp.Repository.GenreicRepository<T>;
-using static DeviceManagement_WebApp.Repository.Startup;
+
 
 namespace DeviceManagement_WebApp.Repository
 {
-    public class GenreicRepository<T> : IGenericRepository<T> where T:class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private readonly ConnectedOfficeContext _context;
-
+        protected readonly ConnectedOfficeContext _context;
         public GenericRepository(ConnectedOfficeContext context)
         {
             _context = context;
         }
-
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);
@@ -47,7 +44,7 @@ namespace DeviceManagement_WebApp.Repository
         {
             _context.Set<T>().RemoveRange(entities);
         }
-
-
     }
 }
+
+
