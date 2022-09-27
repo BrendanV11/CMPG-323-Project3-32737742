@@ -47,8 +47,8 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "CategoryId", "CategoryName"); //DOUBLE CHECK THIS
-            ViewData["ZoneId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "ZoneId", "ZoneName"); //DOUBLE CHECK THIS
+            ViewData["CategoryId"] = new SelectList(devicesRepository.getContext().Category, "CategoryId", "CategoryName"); //DOUBLE CHECK THIS
+            ViewData["ZoneId"] = new SelectList(devicesRepository.getContext().Zone, "ZoneId", "ZoneName"); //DOUBLE CHECK THIS
             return View();
         }
 
@@ -80,8 +80,8 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "CategoryId", "CategoryName", device.CategoryId); //DOUBLE CHECK
-            ViewData["ZoneId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "ZoneId", "ZoneName", device.ZoneId); //DOUBLE CHECK
+            ViewData["CategoryId"] = new SelectList(devicesRepository.getContext().Category, "CategoryId", "CategoryName", device.CategoryId); //DOUBLE CHECK
+            ViewData["ZoneId"] = new SelectList(devicesRepository.getContext().Zone, "ZoneId", "ZoneName", device.ZoneId); //DOUBLE CHECK
             return View(device);
         }
 
