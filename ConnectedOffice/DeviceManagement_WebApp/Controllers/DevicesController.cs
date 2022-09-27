@@ -13,7 +13,7 @@ namespace DeviceManagement_WebApp.Controllers
     public class DevicesController : Controller
     {
         DevicesRepository devicesRepository;
-        private readonly ConnectedOfficeContext _context;
+      //  private readonly ConnectedOfficeContext _context;
 
         public DevicesController(ConnectedOfficeContext context)
         {
@@ -23,8 +23,8 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices
         public async Task<IActionResult> Index()
         {
-            var connectedOfficeContext = _context.Device.Include(d => d.Category).Include(d => d.Zone);
-            return View(await connectedOfficeContext.ToListAsync());
+            var connectedOfficeContext = devicesRepository.GetAll();
+            return View(connectedOfficeContext);
         }
 
         // GET: Devices/Details/5
@@ -35,10 +35,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device
-                .Include(d => d.Category)
-                .Include(d => d.Zone)
-                .FirstOrDefaultAsync(m => m.DeviceId == id);
+            var device = devicesRepository.GetById((Guid)id);
             if (device == null)
             {
                 return NotFound();
@@ -50,8 +47,8 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName");
-            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName");
+            ViewData["CategoryId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "CategoryId", "CategoryName"); //DOUBLE CHECK THIS
+            ViewData["ZoneId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "ZoneId", "ZoneName"); //DOUBLE CHECK THIS
             return View();
         }
 
@@ -63,8 +60,8 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
         {
             device.DeviceId = Guid.NewGuid();
-            _context.Add(device);
-            await _context.SaveChangesAsync();
+            devicesRepository.Add(device);
+            devicesRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
 
@@ -78,13 +75,13 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device.FindAsync(id);
+            var device = devicesRepository.GetById((Guid)id);
             if (device == null)
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "CategoryId", "CategoryName", device.CategoryId);
-            ViewData["ZoneId"] = new SelectList(_context.Zone, "ZoneId", "ZoneName", device.ZoneId);
+            ViewData["CategoryId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "CategoryId", "CategoryName", device.CategoryId); //DOUBLE CHECK
+            ViewData["ZoneId"] = new SelectList((System.Collections.IEnumerable)devicesRepository.getContext(), "ZoneId", "ZoneName", device.ZoneId); //DOUBLE CHECK
             return View(device);
         }
 
@@ -101,8 +98,8 @@ namespace DeviceManagement_WebApp.Controllers
             }
             try
             {
-                _context.Update(device);
-                await _context.SaveChangesAsync();
+                devicesRepository.Update(device);
+                devicesRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -127,10 +124,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Device
-                .Include(d => d.Category)
-                .Include(d => d.Zone)
-                .FirstOrDefaultAsync(m => m.DeviceId == id);
+            var device = devicesRepository.GetById((Guid)id);
             if (device == null)
             {
                 return NotFound();
@@ -144,9 +138,9 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var device = await _context.Device.FindAsync(id);
-            _context.Device.Remove(device);
-            await _context.SaveChangesAsync();
+            var device = devicesRepository.GetById((Guid)id);
+            devicesRepository.Remove(device);
+            devicesRepository.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

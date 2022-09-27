@@ -21,6 +21,15 @@ namespace DeviceManagement_WebApp.Controllers
          
         }
 
+
+        public List<Category> GetAll()
+        {
+            return _context.Category.ToList();
+        }
+
+
+
+
         public bool CategoryExists(Guid id)
         {
             return _context.Category.Any(e => e.CategoryId == id);
