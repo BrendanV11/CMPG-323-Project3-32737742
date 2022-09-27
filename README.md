@@ -34,7 +34,7 @@
 <h3>Deleting data</h3>
 <ul>
   <li>Click on the trashcan icon when you have enetered a controller page</li>
-  <li>Click Delete/li>
+  <li>Click Delete</li>
   <li>The data will then be deleted</li>
     <li>If there is an error just simply click the back arrow and the data will still be there and visible as it should</li>
 </ul>
