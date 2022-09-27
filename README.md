@@ -15,7 +15,7 @@
 <h3>Inserting Data</h3>
 <ul>
   <li>Click on any of the controllers (Zone, Categories, Devices</li>
-  <li>Click on the '+' next to the heading/li>
+  <li>Click on the '+' next to the heading</li>
   <li>Insert the data that is required</li>
   <li>Click create</li>
   <li>If there is an error just simply click the back arrow and the data will still be there and visible as it should</li>
