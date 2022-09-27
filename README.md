@@ -28,6 +28,7 @@
   <li>Change the data to what you would like it to be</li>
   <li>Click Save</li>
   <li>The data will then be updated</li>
+    <li>If there is an error just simply click the back arrow and the data will still be there and visible as it should</li>
 </ul>
 
 <h3>Deleting data</h3>
@@ -35,6 +36,7 @@
   <li>Click on the trashcan icon when you have enetered a controller page</li>
   <li>Click Delete/li>
   <li>The data will then be deleted</li>
+    <li>If there is an error just simply click the back arrow and the data will still be there and visible as it should</li>
 </ul>
 
 
