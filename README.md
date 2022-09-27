@@ -39,5 +39,7 @@
     <li>If there is an error just simply click the back arrow and the data will still be there and visible as it should</li>
 </ul>
 
+<h2>References</h2>
 
+<p>(https://github.com/BrendanV11/Project-3---Standards-Patterns/files/9659782/Project.3.References.pdf)</p>
 
