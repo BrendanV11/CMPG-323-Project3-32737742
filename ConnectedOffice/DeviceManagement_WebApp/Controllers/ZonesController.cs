@@ -12,11 +12,12 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class ZonesController : Controller
     {
+        ZonesRepository zonesRepository;
         private readonly ConnectedOfficeContext _context;
 
         public ZonesController(ConnectedOfficeContext context)
         {
-            _context = context;
+            zonesRepository = new ZonesRepository(context);
         }
 
         // GET: Zones
@@ -142,7 +143,7 @@ namespace DeviceManagement_WebApp.Controllers
 
         private bool ZoneExists(Guid id)
         {
-            return _context.Zone.Any(e => e.ZoneId == id);
+            return zonesRepository.ZoneExists(id);
         }
     }
 }

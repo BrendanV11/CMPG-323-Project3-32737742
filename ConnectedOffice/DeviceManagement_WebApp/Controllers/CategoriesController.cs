@@ -12,11 +12,12 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {
+        CategoriesRepository categoriesRepository;
         private readonly ConnectedOfficeContext _context;
 
         public CategoriesController(ConnectedOfficeContext context)
         {
-            _context = context;
+            categoriesRepository = new CategoriesRepository(context);
         }
 
         // GET: Categories
@@ -139,7 +140,7 @@ namespace DeviceManagement_WebApp.Controllers
 
         private bool CategoryExists(Guid id)
         {
-            return _context.Category.Any(e => e.CategoryId == id);
+            return categoriesRepository.CategoryExists(id);
         }
     }
 }

@@ -12,11 +12,12 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class DevicesController : Controller
     {
+        DevicesRepository devicesRepository;
         private readonly ConnectedOfficeContext _context;
 
         public DevicesController(ConnectedOfficeContext context)
         {
-            _context = context;
+            devicesRepository = new DevicesRepository(context);
         }
 
         // GET: Devices
@@ -151,7 +152,7 @@ namespace DeviceManagement_WebApp.Controllers
 
         private bool DeviceExists(Guid id)
         {
-            return _context.Device.Any(e => e.DeviceId == id);
+            return devicesRepository.DeviceExists(id);
         }
     }
 }
