@@ -6,6 +6,7 @@
 
 <h3>NOTE:</h1>
 <p>If you get an error after performing an action just hit back and then the data that was inserted will still be there.</p>
+<p>If the data does not show up or get removed after a action, just refresh the page</p>
 
 <h3>Registering</h3>
 <ul>
