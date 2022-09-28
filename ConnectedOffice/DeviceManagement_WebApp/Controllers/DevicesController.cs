@@ -13,7 +13,6 @@ namespace DeviceManagement_WebApp.Controllers
     public class DevicesController : Controller
     {
         DevicesRepository devicesRepository;
-        protected readonly ConnectedOfficeContext _context;
 
         public DevicesController(ConnectedOfficeContext context)
         {
@@ -23,8 +22,7 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices
         public async Task<IActionResult> Index()
         {
-            
-            var connectedOfficeContext = devicesRepository.Index();
+            var connectedOfficeContext = devicesRepository.GetAll();
             return View(connectedOfficeContext);
         }
 
