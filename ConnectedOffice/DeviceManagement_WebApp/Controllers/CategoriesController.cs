@@ -12,6 +12,7 @@ namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {
+
         CategoriesRepository categoriesRepository;
    
 

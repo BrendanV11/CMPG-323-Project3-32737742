@@ -9,6 +9,7 @@ using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repository;
 using DeviceManagement_WebApp.Interface;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace DeviceManagement_WebApp.Controllers
 {
@@ -18,6 +19,11 @@ namespace DeviceManagement_WebApp.Controllers
         public DevicesRepository(ConnectedOfficeContext context) : base(context)
         {
 
+        }
+
+        public IIncludableQueryable<Device,Zone> Index()
+        {
+            return _context.Device.Include(d => d.Category).Include(d => d.Zone);
         }
 
         public bool DeviceExists(Guid id)
