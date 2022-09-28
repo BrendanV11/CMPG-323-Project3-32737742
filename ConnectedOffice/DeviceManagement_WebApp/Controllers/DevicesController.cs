@@ -13,7 +13,6 @@ namespace DeviceManagement_WebApp.Controllers
     public class DevicesController : Controller
     {
         DevicesRepository devicesRepository;
-      //  private readonly ConnectedOfficeContext _context;
 
         public DevicesController(ConnectedOfficeContext context)
         {
@@ -53,8 +52,6 @@ namespace DeviceManagement_WebApp.Controllers
         }
 
         // POST: Devices/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
@@ -80,14 +77,12 @@ namespace DeviceManagement_WebApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(devicesRepository.getContext().Category, "CategoryId", "CategoryName", device.CategoryId); //DOUBLE CHECK
-            ViewData["ZoneId"] = new SelectList(devicesRepository.getContext().Zone, "ZoneId", "ZoneName", device.ZoneId); //DOUBLE CHECK
+            ViewData["CategoryId"] = new SelectList(devicesRepository.getContext().Category, "CategoryId", "CategoryName", device.CategoryId); 
+            ViewData["ZoneId"] = new SelectList(devicesRepository.getContext().Zone, "ZoneId", "ZoneName", device.ZoneId); 
             return View(device);
         }
 
         // POST: Devices/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("DeviceId,DeviceName,CategoryId,ZoneId,Status,IsActive,DateCreated")] Device device)
