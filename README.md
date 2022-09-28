@@ -2,8 +2,10 @@
 
 <p>When using all the controllers while the program is running. I expiernce a HTTP ERROR 500. This being said I believe it is just something on my side that is strange. This however does not effect how the solution works and it still inserts all the data that was given with no problem.</p>
 
+<h1>How to work the program:</h3>
 
-<h1>How to work the program:</h1>
+<h3>NOTE:</h1>
+<p>If you get an error after performing an action just hit back and then the data that was inserted will still be there.</p>
 
 <h3>Registering</h3>
 <ul>
