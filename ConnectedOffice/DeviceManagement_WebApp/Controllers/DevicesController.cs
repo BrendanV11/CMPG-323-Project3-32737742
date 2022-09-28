@@ -17,7 +17,7 @@ namespace DeviceManagement_WebApp.Controllers
       
         private IDevices devRepo;
 
-        public DevicesController(ConnectedOfficeContext context, IDevices devices)
+        public DevicesController(IDevices devices)
         {
            
             devRepo = devices;

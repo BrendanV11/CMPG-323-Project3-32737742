@@ -16,7 +16,7 @@ namespace DeviceManagement_WebApp.Controllers
     {
         //private readonly ConnectedOfficeContext _context;
         public IZones zoneRepo;
-        public ZonesController(ConnectedOfficeContext context ,IZones zones)
+        public ZonesController(IZones zones)
         {
             //_context = context;
             zoneRepo = zones;

@@ -16,7 +16,7 @@ namespace DeviceManagement_WebApp.Controllers
     {
         
         private ICategories catRepo;
-        public CategoriesController(ConnectedOfficeContext context , ICategories categories )
+        public CategoriesController(ICategories categories )
         {
             catRepo = categories;
         }
