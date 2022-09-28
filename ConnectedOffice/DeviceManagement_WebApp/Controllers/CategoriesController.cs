@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repository;
+using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class CategoriesController : Controller
     {
         
-        private CategoriesRepository catRepo;
-        public CategoriesController(ConnectedOfficeContext context)
+        private ICategories catRepo;
+        public CategoriesController(ConnectedOfficeContext context , ICategories categories )
         {
-            catRepo = new CategoriesRepository(context);
+            catRepo = categories;
         }
 
         // GET: Categories

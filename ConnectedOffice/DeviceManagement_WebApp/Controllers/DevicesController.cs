@@ -8,18 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repository;
+using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class DevicesController : Controller
     {
       
-        private DevicesRepository devRepo;
+        private IDevices devRepo;
 
-        public DevicesController(ConnectedOfficeContext context)
+        public DevicesController(ConnectedOfficeContext context, IDevices devices)
         {
            
-            devRepo = new DevicesRepository(context);
+            devRepo = devices;
         }
 
         // GET: Devices

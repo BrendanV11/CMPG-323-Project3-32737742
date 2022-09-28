@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
 using DeviceManagement_WebApp.Repository;
+using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class ZonesController : Controller
     {
         //private readonly ConnectedOfficeContext _context;
-        public ZonesRepository zoneRepo;
-        public ZonesController(ConnectedOfficeContext context)
+        public IZones zoneRepo;
+        public ZonesController(ConnectedOfficeContext context ,IZones zones)
         {
             //_context = context;
-            zoneRepo = new ZonesRepository(context);
+            zoneRepo = zones;
         }
 
         // GET: Zones
