@@ -7,22 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DeviceManagement_WebApp.Data;
 using DeviceManagement_WebApp.Models;
+using DeviceManagement_WebApp.Repository;
 
 namespace DeviceManagement_WebApp.Controllers
 {
     public class ZonesController : Controller
     {
-        private readonly ConnectedOfficeContext _context;
-
+        //private readonly ConnectedOfficeContext _context;
+        public ZonesRepository zoneRepo;
         public ZonesController(ConnectedOfficeContext context)
         {
-            _context = context;
+            //_context = context;
+            zoneRepo = new ZonesRepository(context);
         }
 
         // GET: Zones
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Zone.ToListAsync());
+            var context = zoneRepo.GetAll();
+            return View(context);
         }
 
         // GET: Zones/Details/5
@@ -33,8 +36,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            var zone = zoneRepo.GetById((Guid)id);
             if (zone == null)
             {
                 return NotFound();
@@ -50,15 +52,13 @@ namespace DeviceManagement_WebApp.Controllers
         }
 
         // POST: Zones/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
         {
             zone.ZoneId = Guid.NewGuid();
-            _context.Add(zone);
-            await _context.SaveChangesAsync();
+            zoneRepo.Add(zone);
+            zoneRepo.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -71,7 +71,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone.FindAsync(id);
+            var zone = zoneRepo.GetById((Guid)id);
             if (zone == null)
             {
                 return NotFound();
@@ -80,8 +80,6 @@ namespace DeviceManagement_WebApp.Controllers
         }
 
         // POST: Zones/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, [Bind("ZoneId,ZoneName,ZoneDescription,DateCreated")] Zone zone)
@@ -93,8 +91,8 @@ namespace DeviceManagement_WebApp.Controllers
 
             try
             {
-                _context.Update(zone);
-                await _context.SaveChangesAsync();
+                zoneRepo.Update(zone);
+                zoneRepo.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -119,8 +117,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = await _context.Zone
-                .FirstOrDefaultAsync(m => m.ZoneId == id);
+            var zone = zoneRepo.GetById((Guid)id);
             if (zone == null)
             {
                 return NotFound();
@@ -134,15 +131,15 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = await _context.Zone.FindAsync(id);
-            _context.Zone.Remove(zone);
-            await _context.SaveChangesAsync();
+            var zone = zoneRepo.GetById(id);
+            zoneRepo.Remove(zone);
+            zoneRepo.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ZoneExists(Guid id)
         {
-            return _context.Zone.Any(e => e.ZoneId == id);
+            return zoneRepo.ZoneExists(id);
         }
     }
 }
