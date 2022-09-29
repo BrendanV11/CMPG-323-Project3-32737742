@@ -40,7 +40,7 @@ namespace DeviceManagement_WebApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            //
+            //Adds services for all repositories
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<ICategories,CategoriesRepository>();
             services.AddTransient<IDevices, DevicesRepository>();

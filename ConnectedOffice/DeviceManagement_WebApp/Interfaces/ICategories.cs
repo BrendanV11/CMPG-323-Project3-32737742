@@ -9,7 +9,7 @@ namespace DeviceManagement_WebApp.Interface
 {
     public interface ICategories : IGenericRepository<Category>
     {
-        //Used to determine if the category exisits and if it is un use
+        //Used to determine if the category exists and if it is in use
         public bool CategoryExists(Guid id);
 
     }

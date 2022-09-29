@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace DeviceManagement_WebApp.Repository
 {
+    //Generic repo implements Generic Repo Interface, T initialized as class
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         protected readonly ConnectedOfficeContext _context;
@@ -57,6 +58,8 @@ namespace DeviceManagement_WebApp.Repository
         {
             _context.Update(Entit);
         }
+
+        //returns the context of the class required
         public ConnectedOfficeContext GetContext()
         {
             return this._context;

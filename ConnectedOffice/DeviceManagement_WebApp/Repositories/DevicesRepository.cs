@@ -15,11 +15,13 @@ namespace DeviceManagement_WebApp.Repository
         {
         }
 
+        //Used to get both the zone and the category when creating a device
         public IIncludableQueryable<Device,Zone> Use()
         {
             return _context.Device.Include(x => x.Category).Include(x => x.Zone);
         }
 
+        //Used to determine if the device is not null or exists
         public bool DeviceExists(Guid id)
         {
             return _context.Device.Any(e => e.CategoryId == id);
